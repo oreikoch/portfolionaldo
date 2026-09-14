@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reinaldo Koch</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #1e1e20;
+      --bg-elev: #232326;
+      --bg-elev-2: #28282c;
+      --text-light: #f1f1f3;
+      --text-muted: #9d9ea1;
+      --accent: #ffb100;
+      --accent-soft: rgba(255, 177, 0, .12);
+      --border: rgba(255, 255, 255, .08);
+      --radius: 14px;
+      --ff-body: "Poppins", sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--bg-main);
+      color: var(--text-light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    ul { list-style: none; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; background: none; border: none; color: inherit; cursor: pointer; }
+
+    .h2 { font-size: 1.9rem; font-weight: 600; }
+    .h3 { font-size: 1.2rem; font-weight: 600; }
+    .h4 { font-size: 1rem; font-weight: 500; }
+    .h5 { font-size: .95rem; font-weight: 500; }
+
+    /* ---------- layout ---------- */
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 25px;
+    }
+
+    /* ---------- sidebar ---------- */
+    .sidebar {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 25px;
+      height: max-content;
+    }
+
+    .sidebar-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .avatar-box {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #ff7a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e1e20;
+    }
+
+    .info-content .name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .info-content .title {
+      font-size: .8rem;
+      color: var(--text-muted);
+      background: var(--bg-elev-2);
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .info_more-btn {
+      display: none;
+    }
+
+    .info_more-btn ion-icon { transition: transform .25s ease; }
+    .info_more-btn.active ion-icon { transform: rotate(180deg); }
+
+    /* visible by default (desktop): contact block sits right under the avatar/name */
+    .sidebar-info_more {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows .35s ease;
+    }
+    .sidebar-info_more > div { overflow: hidden; }
+
+    .separator {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    .contacts-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-box {
+      width: 34px;
+      height: 34px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-title {
+      font-size: .7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+    }
+
+    .contact-link, .contact-info address, .contact-info time {
+      font-size: .82rem;
+      font-style: normal;
+      word-break: break-word;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    /* ---------- navbar ---------- */
+    .navbar {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 25px;
+      padding: 6px;
+    }
+
+    .navbar-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .navbar-link {
+      padding: 12px 18px;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-radius: 10px;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .navbar-link:hover { color: var(--text-light); }
+
+    .navbar-link.active {
+      background: var(--accent);
+      color: #1e1e20;
+    }
+
+    /* ---------- article panels ---------- */
+    article {
+      display: none;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      animation: fadeIn .35s ease;
+    }
+
+    article.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    article header { margin-bottom: 25px; }
+
+    .about-text p { color: var(--text-muted); margin-bottom: 14px; font-size: .92rem; }
+
+    .service-title, .clients-title { margin-bottom: 18px; }
+
+    .service { margin: 35px 0; }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .service-item {
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      gap: 14px;
+    }
+
+    .service-icon-box {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .service-item-title { margin-bottom: 6px; }
+    .service-item-text { font-size: .82rem; color: var(--text-muted); }
+
+    .clients-list {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .clients-item {
+      flex-shrink: 0;
+      width: 90px;
+      height: 60px;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      color: var(--text-muted);
+    }
+
+    /* ---------- resume ---------- */
+    .timeline { margin-bottom: 35px; }
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .title-wrapper .icon-box { width: 38px; height: 38px; font-size: 1.2rem; }
+
+    .timeline-list { padding-left: 20px; border-left: 2px solid var(--border); }
+
+    .timeline-item { position: relative; padding-bottom: 22px; padding-left: 20px; }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -26px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline-item-title { margin-bottom: 4px; }
+
+    .timeline-item span {
+      font-size: .75rem;
+      color: var(--accent);
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .timeline-text { font-size: .85rem; color: var(--text-muted); }
+
+    .skills-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .skills-item .title-wrapper {
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .skill-progress-bg {
+      height: 8px;
+      background: var(--bg-elev-2);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .skill-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #ff7a1a);
+      border-radius: 6px;
+    }
+
+    /* ---------- portfolio ---------- */
+    .filter-list { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+
+    .filter-list button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: .82rem;
+      color: var(--text-muted);
+      background: var(--bg-elev-2);
+    }
+
+    .filter-list button.active { background: var(--accent); color: #1e1e20; }
+
+    .filter-select-box { position: relative; margin-bottom: 20px; display: none; }
+
+    .filter-select {
+      width: 100%;
+      background: var(--bg-elev-2);
+      padding: 10px 14px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .85rem;
+    }
+
+    .select-list {
+      position: absolute;
+      top: 105%;
+      left: 0;
+      right: 0;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: none;
+      z-index: 5;
+    }
+
+    .select-list.active { display: block; }
+    .select-item button { width: 100%; text-align: left; padding: 10px 14px; font-size: .85rem; }
+    .select-item button:hover { background: var(--accent-soft); }
+
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .project-item { display: none; }
+    .project-item.active { display: block; }
+
+    .project-img {
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--bg-elev-2), #3a3a40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 2rem;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-title { font-size: .95rem; margin-bottom: 2px; }
+    .project-category { font-size: .78rem; color: var(--text-muted); }
+
+    /* ---------- blog ---------- */
+    .blog-posts-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .blog-banner-box {
+      aspect-ratio: 16/10;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--bg-elev-2), #3a3a40);
+      margin-bottom: 12px;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+
+    .blog-item-title { margin-bottom: 6px; font-size: 1rem; }
+    .blog-text { font-size: .82rem; color: var(--text-muted); }
+
+    /* ---------- contact ---------- */
+    .mapbox { border-radius: 12px; overflow: hidden; margin-bottom: 25px; }
+    .mapbox iframe { width: 100%; height: 260px; border: 0; filter: grayscale(1) invert(0.9); }
+
+    .form-title { margin-bottom: 16px; }
+
+    .input-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--bg-elev-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text-light);
+      font-family: inherit;
+      font-size: .88rem;
+    }
+
+    textarea.form-input { min-height: 120px; resize: vertical; margin-bottom: 16px; }
+
+    .form-input:focus { outline: none; border-color: var(--accent); }
+
+    .form-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #1e1e20;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: not-allowed;
+      opacity: .5;
+      transition: opacity .2s ease;
+    }
+
+    .form-btn:not([disabled]) { cursor: pointer; opacity: 1; }
+
+    #form-status { margin-top: 12px; font-size: .82rem; color: var(--accent); display: none; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+
+      .info_more-btn {
+        display: inline-flex;
+        position: absolute;
+        bottom: -14px;
+        right: 0;
+        background: var(--bg-elev-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: .75rem;
+        color: var(--text-muted);
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* on mobile it starts collapsed and expands on click */
+      .sidebar-info_more { grid-template-rows: 0fr; }
+      .sidebar-info_more.active { grid-template-rows: 1fr; }
+
+      .input-wrapper { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      main { margin: 15px auto; padding: 0 12px; }
+      article { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <div class="avatar-box">RK</div>
+
+        <div class="info-content">
+          <h1 class="name" title="Reinaldo Koch">Reinaldo Koch</h1>
+          <p class="title">Marketing | Design | Comunicação</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Mostrar Contato</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more" data-sidebar-more>
+        <div>
+          <div class="separator"></div>
+
+          <ul class="contacts-list">
+
+            <li class="contact-item">
+              <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
+              <div class="contact-info">
+                <p class="contact-title">Email</p>
+                <a href="mailto:koch.rei@gmail.com" class="contact-link">koch.rei@gmail.com</a>
+              </div>
+            </li>
+
+            <li class="contact-item">
+              <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
+              <div class="contact-info">
+                <p class="contact-title">Celular</p>
+                <a href="tel:+5511972559857" class="contact-link">+55 11 97255-9857</a>
+              </div>
+            </li>
+
+            <li class="contact-item">
+              <div class="icon-box"><ion-icon name="calendar-outline"></ion-icon></div>
+              <div class="contact-info">
+                <p class="contact-title">Aniversário</p>
+                <time datetime="1994-07-10">10 de Julho, 1994</time>
+              </div>
+            </li>
+
+            <li class="contact-item">
+              <div class="icon-box"><ion-icon name="location-outline"></ion-icon></div>
+              <div class="contact-info">
+                <p class="contact-title">Endereço</p>
+                <address>Av. Antônio Frederico Ozanan, 2311, Jundiaí-SP</address>
+              </div>
+            </li>
+
+          </ul>
+
+          <div class="separator"></div>
+        </div>
+      </div>
+
+    </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><button class="navbar-link active" data-nav-link data-page="about">Sobre mim</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link data-page="resume">Currículo</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link data-page="portfolio">Portfolio</button></li>
+        </ul>
+      </nav>
+
+      <!-- ABOUT -->
+      <article class="about active" data-page="about">
+
+        <header><h2 class="h2 article-title">Prazer, Reinaldo Koch</h2></header>
+
+        <section class="about-text">
+          <p>
+            Profissional de Marketing e Comunicação com mais de 10 anos de experiência em branding, campanhas
+            digitais, social media, direção de arte e produção audiovisual. Perfil híbrido, com atuação estratégica e
+            hands-on na criação, planejamento e execução de campanhas institucionais, promocionais e digitais.
+          </p>
+          <p>
+            Experiência na gestão de projetos criativos de ponta a ponta, interface com fornecedores e
+            acompanhamento de indicadores de performance, unindo visão de marca, criatividade e objetivos de negócio.
+          </p>
+        </section>
+
+        <section class="service">
+          <h3 class="h3 service-title">Minhas Habilidades</h3>
+          <ul class="service-list">
+            <li class="service-item">
+              <div class="service-icon-box">📣</div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Marketing</h4>
+                <p class="service-item-text">Estratégias criativas para fortalecer sua marca e alcançar novos públicos.</p>
+              </div>
+            </li>
+            <li class="service-item">
+              <div class="service-icon-box">💬</div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Comunicação</h4>
+                <p class="service-item-text">Comunicação estratégica para conectar sua marca ao público certo.</p>
+              </div>
+            </li>
+            <li class="service-item">
+              <div class="service-icon-box">🎨</div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Designer</h4>
+                <p class="service-item-text">Criação de identidades visuais modernas, profissionais e marcantes.</p>
+              </div>
+            </li>
+            <li class="service-item">
+              <div class="service-icon-box">🎥</div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Audiovisual</h4>
+                <p class="service-item-text">Produção de conteúdos visuais impactantes para destacar sua marca.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="clients">
+          <h3 class="h3 clients-title">Clientes</h3>
+          <ul class="clients-list has-scrollbar">
+            <li class="clients-item">Cliente 1</li>
+            <li class="clients-item">Cliente 2</li>
+            <li class="clients-item">Cliente 3</li>
+            <li class="clients-item">Cliente 4</li>
+            <li class="clients-item">Cliente 5</li>
+            <li class="clients-item">Cliente 6</li>
+          </ul>
+        </section>
+
+      </article>
+
+      <!-- RESUME -->
+      <article class="resume" data-page="resume">
+
+        <header><h2 class="h2 article-title">Currículo</h2></header>
+
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+            <h3 class="h3">Educação</h3>
+          </div>
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Publicidade e Propaganda - Unifaccamp</h4>
+              <span>2013 — 2016</span>
+              <p class="timeline-text">Formação voltada à criação, planejamento e gestão de campanhas publicitárias, comunicação e estratégias de marketing, unindo criatividade, design e visão de mercado.</p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Especialização em UX/UI Design - Coderhouse</h4>
+              <span>2024</span>
+              <p class="timeline-text">Formação focada em pesquisa, experiência do usuário, arquitetura da informação, prototipação e criação de interfaces digitais intuitivas e funcionais.</p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Intercâmbio Internacional de Idiomas — Malta</h4>
+              <span>2018</span>
+              <p class="timeline-text">Experiência internacional voltada ao aprimoramento da língua inglesa, com imersão cultural e desenvolvimento da comunicação em ambiente multicultural.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+            <h3 class="h3">Experiência</h3>
+          </div>
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Analista de Marketing Sênior - Clube Jundiaiense</h4>
+              <span>2022 — Presente</span>
+              <p class="timeline-text">Planejamento e execução de campanhas e grandes eventos, gestão da presença digital e identidade visual, coordenação de projetos criativos, fornecedores e equipes, além de análise de KPIs para otimização de campanhas e desenvolvimento de peças digitais e offline.</p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title"> Analista de Marketing e Produção Audiovisual - Unifaccamp</h4>
+              <span>2018 — 2021</span>
+              <p class="timeline-text">Produção, captação e edição de vídeos institucionais e promocionais, apoio à comunicação digital e gestão de redes sociais, cobertura e suporte audiovisual em eventos e lives, além do desenvolvimento de conteúdos visuais e audiovisuais alinhados à marca e aos objetivos de marketing.</p>
+            </li>
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Assistente de Marketing e Design - Marabraz.com</h4>
+              <span>2015 - 2018</span>
+              <p class="timeline-text">Criação de materiais gráficos e peças publicitárias para campanhas promocionais, ações sazonais e canais online e offline, com apoio ao planejamento e execução de ações integradas de marketing.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="skill">
+          <h3 class="h3 skills-title">Minhas Habilidades</h3>
+          <ul class="skills-list content-card">
+            <li class="skills-item">
+              <div class="title-wrapper"><h5 class="h5">Marketing e Estratégia</h5><data value="90">90%</data></div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper"><h5 class="h5">Criação e Design</h5><data value="95">95%</data></div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: 95%;"></div></div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper"><h5 class="h5">Branding</h5><data value="90">90%</data></div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper"><h5 class="h5">Digital e UX/UI</h5><data value="80">80%</data></div>
+              <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: 80%;"></div></div>
+            </li>
+          </ul>
+        </section>
+
+      </article>
+
+      <!-- PORTFOLIO -->
+      <article class="portfolio" data-page="portfolio">
+
+        <header><h2 class="h2 article-title">Portfolio</h2></header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+            <li class="filter-item"><button class="active" data-filter-btn data-filter="all">Todos</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="web design">Designer e Audiovisual</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="applications">Marketing</button></li>
+            <li class="filter-item"><button data-filter-btn data-filter="web development">Projetos</button></li>
+          </ul>
+
+          <ul class="project-list">
+
+            <li class="project-item active" data-filter-item data-category="web development">
+              <a href="#">
+                <figure class="project-img">💼</figure>
+                <h3 class="project-title">Clube Jundiaiense</h3>
+                <p class="project-category">Projetos</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web development">
+              <a href="#">
+                <figure class="project-img">🧭</figure>
+                <h3 class="project-title">Orizon</h3>
+                <p class="project-category">Projetos</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web design">
+              <a href="#">
+                <figure class="project-img">🎯</figure>
+                <h3 class="project-title">Clube Jundiaiense</h3>
+                <p class="project-category">Designer</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="applications">
+              <a href="#">
+                <figure class="project-img">🎮</figure>
+                <h3 class="project-title">Brawlhalla</h3>
+                <p class="project-category">Marketing</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web design">
+              <a href="#">
+                <figure class="project-img">🖌️</figure>
+                <h3 class="project-title">Marabraz</h3>
+                <p class="project-category">Designer</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web design">
+              <a href="#">
+                <figure class="project-img">✨</figure>
+                <h3 class="project-title">MetaSpark</h3>
+                <p class="project-category">Designer</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web development">
+              <a href="#">
+                <figure class="project-img">📊</figure>
+                <h3 class="project-title">Summary</h3>
+                <p class="project-category">Projetos</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="applications">
+              <a href="#">
+                <figure class="project-img">✅</figure>
+                <h3 class="project-title">Task Manager</h3>
+                <p class="project-category">Marketing</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web development">
+              <a href="#">
+                <figure class="project-img">🛬</figure>
+                <h3 class="project-title">Arrival</h3>
+                <p class="project-category">Projetos</p>
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // ---------- sidebar toggle (mobile) ----------
+    const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+    const sidebarMore = document.querySelector("[data-sidebar-more]");
+
+    if (sidebarBtn) {
+      sidebarBtn.addEventListener("click", function () {
+        sidebarMore.classList.toggle("active");
+        this.classList.toggle("active");
+      });
+    }
+
+    // ---------- navbar tab switching (same page, no reload) ----------
+    const navLinks = document.querySelectorAll("[data-nav-link]");
+    const pages = document.querySelectorAll("article[data-page]");
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        const target = this.dataset.page;
+
+        navLinks.forEach((l) => l.classList.remove("active"));
+        this.classList.add("active");
+
+        pages.forEach((page) => {
+          page.classList.toggle("active", page.dataset.page === target);
+        });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    // ---------- portfolio filter ----------
+    const filterBtns = document.querySelectorAll("[data-filter-btn]");
+    const projectItems = document.querySelectorAll("[data-filter-item]");
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const filter = this.dataset.filter;
+
+        filterBtns.forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+
+        projectItems.forEach((item) => {
+          const match = filter === "all" || item.dataset.category === filter;
+          item.classList.toggle("active", match);
+        });
+      });
+    });
+
+    // ---------- contact form ----------
+    const form = document.querySelector("[data-form]");
+    const formInputs = document.querySelectorAll("[data-form-input]");
+    const formBtn = document.querySelector("[data-form-btn]");
+    const formStatus = document.getElementById("form-status");
+
+    function checkFormValidity() {
+      formBtn.disabled = !form.checkValidity();
+    }
+
+    formInputs.forEach((input) => input.addEventListener("input", checkFormValidity));
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      formStatus.style.display = "block";
+      form.reset();
+      formBtn.disabled = true;
+    });
+  </script>
+
+</body>
+
+</html>
