@@ -34,7 +34,12 @@ _adicione aqui um screenshot do site, por exemplo:_
 ```
 .
 ├── index.html                # Estrutura, estilos e scripts do site (arquivo único)
-├── presentations/            # PDFs dos projetos exibidos no Portfolio
+├── assets/
+│   └── covers/                # Capas (thumbnails) de cada projeto, exibidas no Portfolio
+│       ├── Instagram_Crescimento_ClubeJundiaiense.jpg
+│       ├── CJ_Memories.jpg
+│       └── ... (uma capa por projeto)
+├── presentations/             # PDFs dos projetos exibidos no Portfolio
 │   ├── Instagram_Crescimento_ClubeJundiaiense.pdf
 │   ├── Planejamento_Conteudo_Cultural2026.pdf
 │   ├── Pesquisa_Satisfacao_Eventos.pdf
@@ -49,10 +54,10 @@ _adicione aqui um screenshot do site, por exemplo:_
 │   ├── Taqe_Raizen_ProgramaAprendiz.pdf
 │   ├── Gentileza_Gera_Gentileza.pdf
 │   └── Teste_ZZ2.pdf
-└── README.md                 # Este arquivo
+└── README.md                  # Este arquivo
 ```
 
-> O site em si é um único arquivo `index.html`, contendo HTML, CSS (`<style>`) e JavaScript (`<script>`) — ideal para hospedagem simples e sem etapas de build. Cada card da seção **Portfolio** abre, em uma nova aba, o PDF correspondente dentro de `presentations/`.
+> O site em si é um único arquivo `index.html`, contendo HTML, CSS (`<style>`) e JavaScript (`<script>`) — ideal para hospedagem simples e sem etapas de build. Cada card da seção **Portfolio** mostra a capa (primeira página) da apresentação e, ao passar o mouse, exibe um selo "Ver PDF" que abre o arquivo correspondente em `presentations/` em uma nova aba.
 
 ## 🚀 Como rodar localmente
 
@@ -82,11 +87,14 @@ Para adaptar este site a outro perfil:
 - **Dados pessoais e contato**: edite a seção `<aside class="sidebar">` (nome, cargo, e-mail, telefone, endereço)
 - **Sobre mim e habilidades**: edite a seção `<article class="about">`
 - **Currículo**: edite as listas dentro de `<article class="resume">` (educação, experiência e barras de skill)
-- **Projetos do portfólio**: edite os itens de `<ul class="project-list">` dentro de `<article class="portfolio">`, ajustando título, categoria (`data-category`) e o `href` do link. Para adicionar um novo projeto, coloque o PDF (ou outro arquivo) dentro de `presentations/` e aponte o `href` do card para ele
+- **Projetos do portfólio**: edite os itens de `<ul class="project-list">` dentro de `<article class="portfolio">`, ajustando título, categoria (`data-category`), a imagem de capa e o `href` do link. Para adicionar um novo projeto: salve a capa em `assets/covers/` e o arquivo (PDF, etc.) em `presentations/`, depois adicione um card seguindo o padrão
   ```html
   <li class="project-item active" data-filter-item data-category="web design">
     <a href="presentations/Novo_Projeto.pdf" target="_blank" rel="noopener">
-      <figure class="project-img">🎨</figure>
+      <figure class="project-img">
+        <img src="assets/covers/Novo_Projeto.jpg" alt="Capa do projeto Novo Projeto" loading="lazy">
+        <span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span>
+      </figure>
       <h3 class="project-title">Novo Projeto</h3>
       <p class="project-category">Designer</p>
     </a>

@@ -387,7 +387,55 @@
       overflow: hidden;
     }
 
-    .project-title { font-size: .95rem; margin-bottom: 2px; }
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform .4s ease;
+    }
+
+    .project-img::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,.7) 100%);
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .project-item a:hover .project-img img { transform: scale(1.08); }
+    .project-item a:hover .project-img::before { opacity: 1; }
+
+    .project-view {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #1e1e20;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 20px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .project-view ion-icon { font-size: 1rem; }
+
+    .project-item a:hover .project-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-title { font-size: .95rem; margin-bottom: 2px; transition: color .2s ease; }
+    .project-item a:hover .project-title { color: var(--accent); }
     .project-category { font-size: .78rem; color: var(--text-muted); }
 
     /* ---------- blog ---------- */
@@ -737,23 +785,23 @@
 
             <li class="project-item active" data-filter-item data-category="applications">
               <a href="presentations/Instagram_Crescimento_ClubeJundiaiense.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">📈</figure>
+                <figure class="project-img"><img src="assets/covers/Instagram_Crescimento_ClubeJundiaiense.jpg" alt="Capa da apresentação Instagram Crescimento ClubeJundiaiense" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Crescimento no Instagram</h3>
                 <p class="project-category">Marketing</p>
               </a>
             </li>
 
             <li class="project-item active" data-filter-item data-category="applications">
-              <a href="presentations/Planejamento_Conteudo_Cultural2026.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🗓️</figure>
-                <h3 class="project-title">Planejamento de Conteúdo Cultural</h3>
+              <a href="presentations/Planejamento_Conteudo_2026.pdf" target="_blank" rel="noopener">
+                <figure class="project-img"><img src="assets/covers/Planejamento_Conteudo_2026.jpg" alt="Capa da apresentação Planejamento de Conteúdo 2026" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
+                <h3 class="project-title">Planejamento de Conteúdo 2026</h3>
                 <p class="project-category">Marketing</p>
               </a>
             </li>
 
             <li class="project-item active" data-filter-item data-category="web development">
               <a href="presentations/Pesquisa_Satisfacao_Eventos.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">📋</figure>
+                <figure class="project-img"><img src="assets/covers/Pesquisa_Satisfacao_Eventos.jpg" alt="Capa da apresentação Pesquisa Satisfacao Eventos" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Pesquisa de Satisfação de Eventos</h3>
                 <p class="project-category">Projetos</p>
               </a>
@@ -761,7 +809,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/CJ_Memories.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🪩</figure>
+                <figure class="project-img"><img src="assets/covers/CJ_Memories.jpg" alt="Capa da apresentação CJ Memories" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">CJ Memories</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -769,7 +817,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/CJ_Geek.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🎮</figure>
+                <figure class="project-img"><img src="assets/covers/CJ_Geek.jpg" alt="Capa da apresentação CJ Geek" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">CJ Geek</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -777,7 +825,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/Empodera_MesDasMulheres.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">💜</figure>
+                <figure class="project-img"><img src="assets/covers/Empodera_MesDasMulheres.jpg" alt="Capa da apresentação Empodera MesDasMulheres" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Empodera! — Mês das Mulheres</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -785,7 +833,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/Camiseta_Staff.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">👕</figure>
+                <figure class="project-img"><img src="assets/covers/Camiseta_Staff.jpg" alt="Capa da apresentação Camiseta Staff" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Camiseta Staff</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -793,7 +841,7 @@
 
             <li class="project-item active" data-filter-item data-category="web development">
               <a href="presentations/Manual_de_Modalidades.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">📘</figure>
+                <figure class="project-img"><img src="assets/covers/Manual_de_Modalidades.jpg" alt="Capa da apresentação Manual de Modalidades" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Manual de Modalidades</h3>
                 <p class="project-category">Projetos</p>
               </a>
@@ -801,7 +849,7 @@
 
             <li class="project-item active" data-filter-item data-category="web development">
               <a href="presentations/Transfer_de_Verao.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🚐</figure>
+                <figure class="project-img"><img src="assets/covers/Transfer_de_Verao.jpg" alt="Capa da apresentação Transfer de Verao" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Transfer de Verão</h3>
                 <p class="project-category">Projetos</p>
               </a>
@@ -809,7 +857,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/Curta_o_Clube_com_Responsabilidade.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">⚠️</figure>
+                <figure class="project-img"><img src="assets/covers/Curta_o_Clube_com_Responsabilidade.jpg" alt="Capa da apresentação Curta o Clube com Responsabilidade" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Curta o Clube com Responsabilidade</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -817,7 +865,7 @@
 
             <li class="project-item active" data-filter-item data-category="applications">
               <a href="presentations/Raizen_Gestao_de_Conteudo.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🌱</figure>
+                <figure class="project-img"><img src="assets/covers/Raizen_Gestao_de_Conteudo.jpg" alt="Capa da apresentação Raizen Gestao de Conteudo" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Raízen — Gestão de Conteúdo</h3>
                 <p class="project-category">Marketing</p>
               </a>
@@ -825,7 +873,7 @@
 
             <li class="project-item active" data-filter-item data-category="applications">
               <a href="presentations/Taqe_Raizen_ProgramaAprendiz.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🧑‍💼</figure>
+                <figure class="project-img"><img src="assets/covers/Taqe_Raizen_ProgramaAprendiz.jpg" alt="Capa da apresentação Taqe Raizen ProgramaAprendiz" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Taqe × Raízen — Programa Aprendiz</h3>
                 <p class="project-category">Marketing</p>
               </a>
@@ -833,7 +881,7 @@
 
             <li class="project-item active" data-filter-item data-category="web design">
               <a href="presentations/Gentileza_Gera_Gentileza.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🤝</figure>
+                <figure class="project-img"><img src="assets/covers/Gentileza_Gera_Gentileza.jpg" alt="Capa da apresentação Gentileza Gera Gentileza" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Gentileza Gera Gentileza</h3>
                 <p class="project-category">Designer</p>
               </a>
@@ -841,9 +889,25 @@
 
             <li class="project-item active" data-filter-item data-category="web development">
               <a href="presentations/Teste_ZZ2.pdf" target="_blank" rel="noopener">
-                <figure class="project-img">🏍️</figure>
+                <figure class="project-img"><img src="assets/covers/Teste_ZZ2.jpg" alt="Capa da apresentação Teste ZZ2" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver PDF</span></figure>
                 <h3 class="project-title">Teste ZZ2 — Vídeo & UX/UI</h3>
                 <p class="project-category">Projetos</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web design">
+              <a href="projects/ativamente.html" target="_blank" rel="noopener">
+                <figure class="project-img"><img src="assets/covers/Ativamente.jpg" alt="Capa do projeto Ativamente" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver no Figma</span></figure>
+                <h3 class="project-title">Ativamente</h3>
+                <p class="project-category">Designer</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="web design">
+              <a href="projects/claudicas.html" target="_blank" rel="noopener">
+                <figure class="project-img"><img src="assets/covers/Claudicas.jpg" alt="Capa do projeto Claudicas" loading="lazy"><span class="project-view"><ion-icon name="eye-outline"></ion-icon> Ver no Figma</span></figure>
+                <h3 class="project-title">Claudicas</h3>
+                <p class="project-category">Designer</p>
               </a>
             </li>
 
