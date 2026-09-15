@@ -374,7 +374,7 @@
     .project-item.active { display: block; }
 
     .project-img {
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/9;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--bg-elev-2), #3a3a40);
       display: flex;
@@ -390,8 +390,8 @@
     .project-img img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: top;
+      object-fit: contain;
+      object-position: center;
       transition: transform .4s ease;
     }
 
@@ -434,9 +434,9 @@
       transform: translateY(0);
     }
 
-    .project-title { font-size: .95rem; margin-bottom: 2px; transition: color .2s ease; }
+    .project-title { font-size: .85rem; margin-bottom: 2px; transition: color .2s ease; line-height: 1.3; }
     .project-item a:hover .project-title { color: var(--accent); }
-    .project-category { font-size: .78rem; color: var(--text-muted); }
+    .project-category { font-size: .72rem; color: var(--text-muted); }
 
     /* ---------- blog ---------- */
     .blog-posts-list {
